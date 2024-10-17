@@ -1,71 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="car2.css" />
     <script src="https://js.paystack.co/v1/inline.js"></script>
-</head>
-<body>
-<header>
-    <div class="logo">University Shop</div>
-    <nav>
+  </head>
+  <body>
+    <header>
+      <div class="logo">University Shop</div>
+      <nav>
         <ul>
-            <li><a href="index2.html">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="cart.html">Cart</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
         </ul>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<section class="cart-page">
-    <h1>Your Shopping Cart</h1>
+    <section class="cart-page">
+      <h1>Your Shopping Cart</h1>
 
-    <!-- Cart Items will be populated dynamically from JavaScript -->
-    <div id="cart-items" class="cart-items"></div>
+      <!-- Cart Items will be populated dynamically from JavaScript -->
+      <div id="cart-items" class="cart-items"></div>
 
-    <!-- Cart Summary -->
-    <div class="cart-summary">
+      <!-- Cart Summary -->
+      <div class="cart-summary">
         <h3>Order Summary</h3>
         <p>Subtotal: <span id="cart-subtotal">$0.00</span></p>
         <p>Shipping: <span id="cart-shipping">$5.00</span></p>
         <p>Tax: <span id="cart-tax">$0.00</span></p>
         <h4>Total: <span id="cart-total">$0.00</span></h4>
-        <button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
-    </div>
+        <button class="checkout-button" onclick="checkout()">
+          Proceed to Checkout
+        </button>
+      </div>
 
-    <!-- Continue Shopping -->
-    <a href="index2.html" class="continue-shopping">Continue Shopping</a>
-</section>
+      <!-- Continue Shopping -->
+      <a href="index.html" class="continue-shopping">Continue Shopping</a>
+    </section>
 
-<footer>
-    <p>&copy; 2024 University E-Shop. All Rights Reserved.</p>
-</footer>
+    <footer>
+      <p>&copy; 2024 University E-Shop. All Rights Reserved.</p>
+    </footer>
 
-<script>
-    // Retrieve cart items from local storage or initialize as an empty array
-    let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+    <script>
+      // Retrieve cart items from local storage or initialize as an empty array
+      let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
 
-    // Function to display cart items
-    function displayCart() {
-        const cartItemsContainer = document.getElementById('cart-items');
-        cartItemsContainer.innerHTML = ''; // Clear previous items
+      // Function to display cart items
+      function displayCart() {
+        const cartItemsContainer = document.getElementById("cart-items");
+        cartItemsContainer.innerHTML = ""; // Clear previous items
         let subtotal = 0;
 
         // Iterate through each cart item
         cart.forEach((item, index) => {
-            const itemTotal = item.price * item.quantity; // Assuming each item has a price
-            subtotal += itemTotal; // Add item total to subtotal
+          const itemTotal = item.price * item.quantity; // Assuming each item has a price
+          subtotal += itemTotal; // Add item total to subtotal
 
-            // Create HTML for each cart item
-            cartItemsContainer.innerHTML += `
+          // Create HTML for each cart item
+          cartItemsContainer.innerHTML += `
                 <div class="cart-item">
                     <span>${item.title}</span>
                     <span>$${item.price.toFixed(2)}</span>
-                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                    <input type="number" value="${
+                      item.quantity
+                    }" min="1" onchange="updateQuantity(${index}, this.value)">
                     <span>$${itemTotal.toFixed(2)}</span>
                     <button onclick="removeFromCart(${index})">Remove</button>
                 </div>
@@ -73,64 +77,70 @@
         });
 
         // Update cart summary
-        document.getElementById('cart-subtotal').innerText = `$${subtotal.toFixed(2)}`;
-        const shipping = 5.00; // Flat shipping fee
-        const tax = 0.00; // Placeholder for tax
+        document.getElementById(
+          "cart-subtotal"
+        ).innerText = `$${subtotal.toFixed(2)}`;
+        const shipping = 5.0; // Flat shipping fee
+        const tax = 0.0; // Placeholder for tax
         const total = subtotal + shipping + tax;
-        document.getElementById('cart-shipping').innerText = `$${shipping.toFixed(2)}`;
-        document.getElementById('cart-tax').innerText = `$${tax.toFixed(2)}`;
-        document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
-    }
+        document.getElementById(
+          "cart-shipping"
+        ).innerText = `$${shipping.toFixed(2)}`;
+        document.getElementById("cart-tax").innerText = `$${tax.toFixed(2)}`;
+        document.getElementById("cart-total").innerText = `$${total.toFixed(
+          2
+        )}`;
+      }
 
-    // Update item quantity in the cart
-    function updateQuantity(index, quantity) {
+      // Update item quantity in the cart
+      function updateQuantity(index, quantity) {
         if (quantity < 1) {
-            quantity = 1; // Ensure minimum quantity is 1
+          quantity = 1; // Ensure minimum quantity is 1
         }
         // Update quantity in cart
         cart[index].quantity = parseInt(quantity);
-        localStorage.setItem('cartItems', JSON.stringify(cart));
+        localStorage.setItem("cartItems", JSON.stringify(cart));
         displayCart(); // Update cart display
-    }
+      }
 
-    // Remove item from the cart
-    function removeFromCart(index) {
+      // Remove item from the cart
+      function removeFromCart(index) {
         cart.splice(index, 1); // Remove item from cart
-        localStorage.setItem('cartItems', JSON.stringify(cart));
+        localStorage.setItem("cartItems", JSON.stringify(cart));
         displayCart(); // Update cart display
-    }
+      }
 
-    // Checkout function for Paystack integration
-    function checkout() {
-        const total = parseFloat(document.getElementById('cart-total').innerText.replace('$', ''));
-        
+      // Checkout function for Paystack integration
+      function checkout() {
+        const total = parseFloat(
+          document.getElementById("cart-total").innerText.replace("$", "")
+        );
+
         // Paystack payment code
         const handler = PaystackPop.setup({
-            key: 'sk_test_d2250630e81403427b30d51d42c26e1c26ac2b09', // Replace with your Paystack public key
-            email: 'showa@example.com', // Replace with the customer's email
-            amount: total * 100, // Amount in kobo (multiply by 100)
-            currency: 'NGN',
-            callback: function(response) {
-                // This callback will be called after the payment is successful
-                alert('Payment successful! Reference: ' + response.reference);
-                // Optionally clear cart and redirect to a success page
-                cart = []; // Clear the cart
-                localStorage.setItem('cartItems', JSON.stringify(cart));
-                displayCart(); // Refresh the cart display
-                window.location.href = 'success.html'; // Redirect to success page
-            },
-            onClose: function() {
-                alert('Transaction was not completed, you can close this window.');
-            }
+          key: "sk_test_d2250630e81403427b30d51d42c26e1c26ac2b09", // Replace with your Paystack public key
+          email: "showa@example.com", // Replace with the customer's email
+          amount: total * 100, // Amount in kobo (multiply by 100)
+          currency: "NGN",
+          callback: function (response) {
+            // This callback will be called after the payment is successful
+            alert("Payment successful! Reference: " + response.reference);
+            // Optionally clear cart and redirect to a success page
+            cart = []; // Clear the cart
+            localStorage.setItem("cartItems", JSON.stringify(cart));
+            displayCart(); // Refresh the cart display
+            window.location.href = "success.html"; // Redirect to success page
+          },
+          onClose: function () {
+            alert("Transaction was not completed, you can close this window.");
+          },
         });
-        
+
         handler.openIframe(); // Open the Paystack payment modal
-    }
+      }
 
-    // Display the cart on page load
-    window.onload = displayCart;
-
-</script>
-
-</body>
+      // Display the cart on page load
+      window.onload = displayCart;
+    </script>
+  </body>
 </html>
