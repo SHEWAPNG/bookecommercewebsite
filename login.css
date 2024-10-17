@@ -47,7 +47,7 @@
   cursor: pointer;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -66,6 +66,9 @@
   color: white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center; /* Center text for <a> element */
+  display: inline-block; /* Allow padding */
+  text-decoration: none; /* Remove underline */
 }
 
 .form-btn:active {
@@ -82,7 +85,7 @@
 
 .sign-up-link {
   margin-left: 1px;
-  font-size: 11px;
+  font-size: 12px;
   text-decoration: underline;
   text-decoration-color: #0056b3;
   color: #0056b3;
@@ -114,7 +117,7 @@
   align-items: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   gap: 5px;
 }
 

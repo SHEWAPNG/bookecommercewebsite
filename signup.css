@@ -66,6 +66,9 @@
   color: white;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-align: center; /* Center text for <a> element */
+  display: inline-block; /* Allow padding */
+  text-decoration: none; /* Remove underline */
 }
 
 .form-btn:active {
