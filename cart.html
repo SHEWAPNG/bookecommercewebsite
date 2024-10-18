@@ -6,7 +6,7 @@
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="car2.css" />
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- <script src="https://js.paystack.co/v1/inline.js"></script> -->
   </head>
   <body>
     <header>
@@ -111,36 +111,36 @@
       }
 
       // Checkout function for Paystack integration
-      function checkout() {
+      /* function checkout() {
         const total = parseFloat(
           document.getElementById("cart-total").innerText.replace("$", "")
-        );
+        ); */
 
-        // Paystack payment code
-        const handler = PaystackPop.setup({
-          key: "sk_test_d2250630e81403427b30d51d42c26e1c26ac2b09", // Replace with your Paystack public key
-          email: "showa@example.com", // Replace with the customer's email
-          amount: total * 100, // Amount in kobo (multiply by 100)
-          currency: "NGN",
-          callback: function (response) {
-            // This callback will be called after the payment is successful
-            alert("Payment successful! Reference: " + response.reference);
-            // Optionally clear cart and redirect to a success page
-            cart = []; // Clear the cart
-            localStorage.setItem("cartItems", JSON.stringify(cart));
-            displayCart(); // Refresh the cart display
-            window.location.href = "success.html"; // Redirect to success page
-          },
+      // Paystack payment code
+      /* const handler = PaystackPop.setup({
+          key: "sk_test_d2250630e81403427b30d51d42c26e1c26ac2b09", */ // Replace with your Paystack public key
+      /* email: "showa@example.com", */ // Replace with the customer's email
+      /* amount: total * 100, */ // Amount in kobo (multiply by 100)
+      /*  currency: "NGN", */
+      /* callback: function (response) { */
+      // This callback will be called after the payment is successful
+      /* alert("Payment successful! Reference: " + response.reference); */
+      // Optionally clear cart and redirect to a success page
+      /* cart = []; */ // Clear the cart
+      /*  localStorage.setItem("cartItems", JSON.stringify(cart));
+            displayCart(); */ // Refresh the cart display
+      /* window.location.href = "success.html"; */ // Redirect to success page
+      /* },
           onClose: function () {
-            alert("Transaction was not completed, you can close this window.");
-          },
+            alert("Transaction was not completed, you can close this window."); */
+      /* },
         });
 
-        handler.openIframe(); // Open the Paystack payment modal
-      }
+        handler.openIframe(); */ // Open the Paystack payment modal
+      /*  } */
 
       // Display the cart on page load
-      window.onload = displayCart;
+      /* window.onload = displayCart; */
     </script>
   </body>
 </html>
